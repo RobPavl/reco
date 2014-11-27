@@ -1,0 +1,45 @@
+<title>Receipts</title>
+
+
+  <div class='row'>
+    <div class='col-md-2'>
+      <h5>Виды кухни</h5>
+        <ul>
+          <%@categories.each do |category| %>
+            <li class="blockquote-reverse">
+              <%= link_to category.name, receipts_path(category_id: category.id) %>
+            </li>
+          <% end %>
+        </ul>
+    </div>
+    <div class='col-md-10'>
+    <%= link_to 'New Receipt', new_receipt_path, class: "btn btn-success pull-right"  %>
+      <% @receipts.each do |receipt| %>
+        <h1 class="text-center"><%= receipt.name%></h1>
+          <h4><%= receipt.category.name %></h4>
+        <p>
+          <% receipt.options.each do |opt| %>
+            <%= opt.name %>
+           <%end%>
+        </p>
+        <%= simple_format receipt.steps, class:"text-justify" %>
+        <%= image_tag  receipt.photo.url %>
+          <p><%= time_ago_in_words (receipt.created_at) %></p>
+        <p>
+          <%= link_to 'Show', receipt, class: "btn btn-warning" %>
+          <%= link_to 'Edit', edit_receipt_path(receipt), class: "btn btn-primary" %>
+          <%= link_to 'Destroy', receipt, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
